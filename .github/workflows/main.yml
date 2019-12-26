@@ -1,0 +1,15 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: bitoiu/node-js-action-template@v1.0
+    - name: install
+      run: npm install
+    - name: build
+      run: npm run build
+    - name: test
+      run: npm test
