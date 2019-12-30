@@ -14,11 +14,11 @@ jobs:
       with:
         version: 10
     
-    - name: install dependencies, test and build the app
-      run: |
-        npm install
-        npm test
-        npm run build
+    - name: install dependencies
+      run: npm install
+      
+    - name: build the app
+      run: npm install
         
     - name: dockerize and publish the app
       uses: actions-hub/docker@v1.0.0
