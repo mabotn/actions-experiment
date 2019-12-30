@@ -4,26 +4,21 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Build
+    runs-on: ubuntu-18.04
+
     steps:
-    - uses: bitoiu/node-js-action-template@v1.0
-    - run: |
-        ls
-        echo ${KUBECONFIG}
+    - uses: actions/checkout@v1
+    - name: Use Node.js 10
+      uses: actions/setup-node@v1
+      with:
+        version: 10
+    
+    - name: install dependencies, test and build the app
+      run: |
         npm install
         npm test
         npm run build
-        docker login -u ${} -p ${} ...
-        docker build -t github.com/mabotn/actions-experiment .
-        docker push -t github.com/mabotn/actions-experiment
-    
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: danielr1996/kubectl-action@1.0.0
-        with:
-          kubeconfig: abc
-      - run: |
-          kubectl apply -f deploy/
-          kubectl patch ... 
-
+        
+    - name: dockerize and publish the app
+      uses: actions-hub/docker@v1.0.0
