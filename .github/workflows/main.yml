@@ -7,14 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: bitoiu/node-js-action-template@v1.0
-    - name: install
-      run: npm install
-    - name: test
-      run: npm test
-    - name: build
-      run: npm run build
-    - name: package
-      run: |
+    - run: |
+        ls
+        echo ${KUBECONFIG}
+        npm install
+        npm test
+        npm run build
         docker login -u ${} -p ${} ...
         docker build -t github.com/mabotn/actions-experiment .
         docker push -t github.com/mabotn/actions-experiment
@@ -25,7 +23,7 @@ jobs:
       - uses: danielr1996/kubectl-action@1.0.0
         with:
           kubeconfig: abc
-      - name: deploy to production
-        run: |
+      - run: |
           kubectl apply -f deploy/
           kubectl patch ... 
+
